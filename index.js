@@ -1,18 +1,30 @@
 const httpErrors = require('http-errors')
 
-module.exports = {
-  lambdaError: Object.keys(httpErrors).reduce((acc, func) => {
-    acc[func] = (msg) => {
-      let error = httpErrors[func](msg)
-      return {
-        statusCode: error.statusCode,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-        body: JSON.stringify(error)
-      }
+const lambda = Object.keys(httpErrors).reduce((acc, func) => {
+  acc[func] = (msg) => {
+    let error = httpErrors[func](msg)
+    return {
+      statusCode: error.statusCode,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify(error)
     }
-    return acc
-  }, {}),
-  error: httpErrors
+  }
+  return acc
+}, {})
+
+lambda['OK'] = lambda[200] = (body) => {
+  return {
+    statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+    body: JSON.stringify(body)
+  }
+}
+
+module.exports = {
+  lambda: lambda,
+  standard: httpErrors
 }
