@@ -15,6 +15,11 @@ test('create lambda OK', () => {
   expect(apiResponse.lambda.OK({"test": "test"}).body).toBe("{\"test\":\"test\"}")
 });
 
+test('create lambda html', () => {
+  expect(apiResponse.lambda.OK("<html>").body).toBe("<html>")
+  expect(apiResponse.lambda.OK("<html>").headers["Content-Type"]).toBe("text/html")
+})
+
 test('create lambda redirect', () => {
   expect(apiResponse.lambda.Found("https://example.com").statusCode).toBe(302)
   expect(apiResponse.lambda.Found("https://example.com").headers["Location"]).toBe("https://example.com")
