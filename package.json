@@ -1,6 +1,6 @@
 {
   "name": "ep-api-response-objects",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "UNLICENSED",
   "description": "Error objects for use with api responses",
   "private": true,
