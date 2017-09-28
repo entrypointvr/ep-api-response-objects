@@ -11,6 +11,7 @@ const generateLambdaResponse = (code, body, additionalHeaders = {}) => {
   let preparedBody;
   if (body) {
     if (typeof body !== 'string') {
+      Object.assign(additionalHeaders, {'Content-Type': 'application/json; charset=utf-8'})
       preparedBody = JSON.stringify(body)
     } else {
       Object.assign(additionalHeaders, {'Content-Type': 'text/html'})
